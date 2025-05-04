@@ -2,22 +2,21 @@ package frc.robot.commands;
 
 import java.util.function.Supplier;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveSubsystem;
-import frc.robot.SwerveConstants;
 
-public class SwerveDriveCmd extends Command {
+public class SwerveCmd extends Command {
 	private final SwerveSubsystem swerveSubsystem;
-	private final Supplier<Double> xSpeed, ySpeed, rotation;
+	private final Supplier<Double> xSpeed, ySpeed, rSpeed;
 
-	public SwerveDriveCmd(
-			SwerveSubsystem swerveSubsystem,
-			Supplier<Double> xSpeed, Supplier<Double> ySpeed, Supplier<Double> rotation
-	) {
+	public SwerveCmd(
+		SwerveSubsystem swerveSubsystem,
+		Supplier<Double> xSpeed, Supplier<Double> ySpeed, Supplier<Double> rSpeed) {
 		this.swerveSubsystem = swerveSubsystem;
 		this.xSpeed = xSpeed;
 		this.ySpeed = ySpeed;
-		this.rotation = rotation;
+		this.rSpeed = rSpeed;
 		this.addRequirements(this.swerveSubsystem);
 	}
 
@@ -26,7 +25,7 @@ public class SwerveDriveCmd extends Command {
 
 	@Override
 	public void execute() {
-		this.swerveSubsystem.driveSwerve(this.xSpeed.get(), this.ySpeed.get(), this.rotation.get(), SwerveConstants.gyroField);
+		this.swerveSubsystem.drive(this.xSpeed.get(), this.ySpeed.get(), this.rSpeed.get(), false);
 	}
 
 	@Override
